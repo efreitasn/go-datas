@@ -19,6 +19,21 @@ func TestPeekBeginning(t *testing.T) {
 	if hasHead != expectedHasHead {
 		t.Errorf("got %v, want %v", hasHead, expectedHasHead)
 	}
+
+	// When the linked list is empty
+	ll2 := New()
+
+	head, hasHead = ll2.PeekBeginning()
+	expectedHead = ""
+	expectedHasHead = false
+
+	if head != expectedHead {
+		t.Errorf("got %v, want %v", head, expectedHead)
+	}
+
+	if hasHead != expectedHasHead {
+		t.Errorf("got %v, want %v", hasHead, expectedHasHead)
+	}
 }
 
 func TestInsertBeginning(t *testing.T) {
@@ -95,6 +110,22 @@ func TestPeekEnd(t *testing.T) {
 	if hasTail != expectedHasTail {
 		t.Errorf("got %v, want %v", hasTail, expectedHasTail)
 	}
+
+	// When the linked list is empty
+	ll2 := New()
+
+	tail, hasTail = ll2.PeekBeginning()
+	expectedTail = ""
+	expectedHasTail = false
+
+	if tail != expectedTail {
+		t.Errorf("got %v, want %v", tail, expectedTail)
+	}
+
+	if hasTail != expectedHasTail {
+		t.Errorf("got %v, want %v", hasTail, expectedHasTail)
+	}
+
 }
 
 func TestInsertEnd(t *testing.T) {
