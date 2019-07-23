@@ -153,3 +153,27 @@ func TestDeleteEnd(t *testing.T) {
 		t.Errorf("got %v, want %v", hasHead, expectedHasHead)
 	}
 }
+
+func TestContains(t *testing.T) {
+	ll := New()
+
+	ll.InsertEnd("foo")
+	ll.InsertBeginning("bar")
+	ll.InsertEnd("thing1")
+	ll.InsertBeginning("thing2")
+
+	result := ll.Contains("bar")
+	expectedResult := true
+
+	if result != expectedResult {
+		t.Errorf("got %v, want %v", result, expectedResult)
+	}
+
+	result = ll.Contains("nothing")
+	expectedResult = false
+
+	if result != expectedResult {
+		t.Errorf("got %v, want %v", result, expectedResult)
+	}
+
+}

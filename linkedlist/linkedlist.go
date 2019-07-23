@@ -123,3 +123,18 @@ func (ll *LinkedList) DeleteEnd() {
 	ll.tail.prev.next = nil
 	ll.tail = ll.tail.prev
 }
+
+// Contains returns whether the list contains the specified element
+func (ll *LinkedList) Contains(value string) bool {
+	n := ll.head
+
+	for n != nil {
+		if n.value == value {
+			return true
+		}
+
+		n = n.next
+	}
+
+	return false
+}
