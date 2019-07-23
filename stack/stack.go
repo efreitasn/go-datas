@@ -6,7 +6,7 @@ type Stack struct {
 	items []string
 }
 
-// New creates a Stack of the specified size
+// New creates a stack
 func New() *Stack {
 	var items []string
 
