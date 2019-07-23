@@ -39,3 +39,42 @@ func TestDeleteEnd(t *testing.T) {
 		t.Errorf("got %v, want %v", tail, expectedTail)
 	}
 }
+
+func TestInsertBeginning(t *testing.T) {
+	ll := New()
+
+	ll.InsertBeginning("foo")
+	ll.InsertBeginning("bar")
+	ll.InsertBeginning("foobar")
+
+	head, _ := ll.PeekBeginning()
+	expectedHead := "foobar"
+
+	if head != expectedHead {
+		t.Errorf("got %v, want %v", head, expectedHead)
+	}
+
+	size := ll.Size()
+	expectedSize := 3
+
+	if size != expectedSize {
+		t.Errorf("got %v, want %v", size, expectedSize)
+	}
+}
+
+func TestDeleteBeginning(t *testing.T) {
+	ll := New()
+
+	ll.InsertBeginning("foo")
+	ll.InsertBeginning("bar")
+	ll.InsertBeginning("foobar")
+	ll.DeleteBeginning()
+
+	head, _ := ll.PeekBeginning()
+	expectedHead := "bar"
+
+	if head != expectedHead {
+		t.Errorf("got %v, want %v", head, expectedHead)
+	}
+
+}
