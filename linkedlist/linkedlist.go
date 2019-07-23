@@ -19,8 +19,32 @@ func New() *LinkedList {
 	return &LinkedList{}
 }
 
-// Last returns the last element of the linked list (its tail)
-func (ll *LinkedList) Last() (value string, ok bool) {
+func (ll *LinkedList) insertFirstNode(value string) {
+	n := &node{
+		value: value,
+	}
+
+	ll.head = n
+	ll.tail = n
+	ll.size++
+}
+
+// Size returns the size of the linked list
+func (ll *LinkedList) Size() int {
+	return ll.size
+}
+
+// PeekBeginning returns the first element of the linked list (its head)
+func (ll *LinkedList) PeekBeginning() (value string, ok bool) {
+	if ll.head == nil {
+		return "", false
+	}
+
+	return ll.head.value, true
+}
+
+// PeekEnd returns the last element of the linked list (its tail)
+func (ll *LinkedList) PeekEnd() (value string, ok bool) {
 	if ll.tail == nil {
 		return "", false
 	}
@@ -28,47 +52,38 @@ func (ll *LinkedList) Last() (value string, ok bool) {
 	return ll.tail.value, true
 }
 
-// AddLast adds a value to the end of the linked list
-func (ll *LinkedList) AddLast(value string) {
+// InsertEnd adds a value to the end of the linked list
+func (ll *LinkedList) InsertEnd(value string) {
 	n := &node{
 		value: value,
 	}
 
-	if ll.tail != nil {
-		ll.tail.next = n
-		n.prev = ll.tail
+	if ll.Size() == 0 {
+		ll.insertFirstNode(value)
+
+		return
 	}
 
+	ll.tail.next = n
+	n.prev = ll.tail
 	ll.tail = n
+
 	ll.size++
 }
 
-// DeleteLast removes a value starting from the linked list's tail
-func (ll *LinkedList) DeleteLast(value string) {
-	n := ll.tail
-
-	for n != nil {
-		if n.value == value {
-			if n.prev != nil {
-				n.prev.next = n.next
-			}
-
-			if n.next != nil {
-				n.next.prev = n.prev
-			}
-
-			if n == ll.tail {
-				ll.tail = n.prev
-			}
-
-			return
-		}
-
-		n = n.prev
+// DeleteEnd removes the last element of the linked list (its tail)
+func (ll *LinkedList) DeleteEnd() {
+	if ll.Size() == 0 {
+		return
 	}
-}
 
-// Size returns the size of the linked list
-func (ll *LinkedList) Size() int {
-	return ll.size
+	if ll.Size() == 1 {
+		ll.tail = nil
+		ll.head = nil
+
+		return
+	}
+
+	ll.tail.prev.next = nil
+	ll.tail = ll.tail.prev
 }

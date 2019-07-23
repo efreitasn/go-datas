@@ -2,33 +2,40 @@ package linkedlist
 
 import "testing"
 
-func TestLast(t *testing.T) {
+func TestInsertEnd(t *testing.T) {
 	ll := New()
 
-	ll.AddLast("foo")
-	ll.AddLast("bar")
+	ll.InsertEnd("thing1")
+	ll.InsertEnd("thing2")
+	ll.InsertEnd("thing3")
 
-	got, _ := ll.Last()
-	want := "bar"
+	tail, _ := ll.PeekEnd()
+	expectedTail := "thing3"
 
-	if got != want {
-		t.Errorf("got %v, want %v", got, want)
+	if tail != expectedTail {
+		t.Errorf("got %v, want %v", tail, expectedTail)
+	}
+
+	size := ll.Size()
+	expectedSize := 3
+
+	if size != expectedSize {
+		t.Errorf("got %v, want %v", size, expectedSize)
 	}
 }
 
-func TestDeleteLast(t *testing.T) {
+func TestDeleteEnd(t *testing.T) {
 	ll := New()
 
-	ll.AddLast("foo")
-	ll.AddLast("bar")
-	ll.AddLast("foobar")
+	ll.InsertEnd("foo")
+	ll.InsertEnd("bar")
+	ll.InsertEnd("foobar")
+	ll.DeleteEnd()
 
-	ll.DeleteLast("foobar")
+	tail, _ := ll.PeekEnd()
+	expectedTail := "bar"
 
-	got, _ := ll.Last()
-	want := "bar"
-
-	if got != want {
-		t.Errorf("got %v, want %v", got, want)
+	if tail != expectedTail {
+		t.Errorf("got %v, want %v", tail, expectedTail)
 	}
 }
