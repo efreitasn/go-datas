@@ -3,18 +3,18 @@ package stack
 import "testing"
 
 func TestStack(t *testing.T) {
-	stack := New()
+	s := New()
 
-	stack.Push("foobar")
-	stack.Push("foo")
-	stack.Push("bar")
-	stack.Pop()
+	s.Push("foobar")
+	s.Push("foo")
+	s.Push("bar")
+	s.Pop()
 
-	r := stack.Peek()
+	got := s.Peek()
 	want := "foo"
 
-	if r != want {
-		t.Errorf("got %v, want %v", r, want)
+	if got != want {
+		t.Errorf("got %v, want %v", got, want)
 	}
 }
 
@@ -25,21 +25,21 @@ func TestPop(t *testing.T) {
 		}
 	}()
 
-	stack := New()
+	s := New()
 
-	stack.Pop()
+	s.Pop()
 }
 
 func TestSize(t *testing.T) {
-	stack := New()
+	s := New()
 
-	stack.Push("foo")
-	stack.Push("bar")
+	s.Push("foo")
+	s.Push("bar")
 
-	r := stack.Size()
+	got := s.Size()
 	want := 2
 
-	if r != want {
-		t.Errorf("got %v, want %v", r, want)
+	if got != want {
+		t.Errorf("got %v, want %v", got, want)
 	}
 }
