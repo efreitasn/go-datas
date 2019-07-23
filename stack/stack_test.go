@@ -29,3 +29,17 @@ func TestPop(t *testing.T) {
 
 	stack.Pop()
 }
+
+func TestSize(t *testing.T) {
+	stack := New()
+
+	stack.Push("foo")
+	stack.Push("bar")
+
+	r := stack.Size()
+	want := 2
+
+	if r != want {
+		t.Errorf("got %v, want %v", r, want)
+	}
+}

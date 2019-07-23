@@ -31,7 +31,12 @@ func (s *Stack) Push(val string) {
 
 // Pop removes the last element of the stack
 func (s *Stack) Pop() {
-	if len(s.items) > 0 {
+	if s.Size() > 0 {
 		s.items = s.items[0:(len(s.items) - 1)]
 	}
+}
+
+// Size returns the size of the stack
+func (s *Stack) Size() int {
+	return len(s.items)
 }
