@@ -5,10 +5,10 @@ import "testing"
 func TestSize(t *testing.T) {
 	q := New()
 
-	q.Enqueue("foo")
-	q.Enqueue("bar")
-	q.Enqueue("foobar")
-	q.Enqueue("thing")
+	q.Enqueue(1)
+	q.Enqueue(2)
+	q.Enqueue(3)
+	q.Enqueue(4)
 	q.Dequeue()
 
 	size := q.Size()
@@ -22,14 +22,14 @@ func TestSize(t *testing.T) {
 func TestPeek(t *testing.T) {
 	q := New()
 
-	q.Enqueue("foo")
-	q.Enqueue("bar")
-	q.Enqueue("foobar")
-	q.Enqueue("thing")
+	q.Enqueue(1)
+	q.Enqueue(2)
+	q.Enqueue(3)
+	q.Enqueue(4)
 	q.Dequeue()
 
 	head, hasHead := q.Peek()
-	expectedHead := "bar"
+	expectedHead := 2
 	expectedHasHead := true
 
 	if head != expectedHead {
@@ -44,7 +44,7 @@ func TestPeek(t *testing.T) {
 	q2 := New()
 
 	head, hasHead = q2.Peek()
-	expectedHead = ""
+	expectedHead = 0
 	expectedHasHead = false
 
 	if head != expectedHead {

@@ -1,4 +1,4 @@
-// Package queue provides functions to create/work with queues of strings
+// Package queue provides functions to create/work with queues of integers
 package queue
 
 import (
@@ -25,12 +25,12 @@ func (q *Queue) Size() int {
 }
 
 // Peek returns the element at the start of the queue
-func (q *Queue) Peek() (value string, ok bool) {
+func (q *Queue) Peek() (value int, ok bool) {
 	return q.items.PeekBeginning()
 }
 
 // Enqueue inserts an element at the end of the queue
-func (q *Queue) Enqueue(value string) {
+func (q *Queue) Enqueue(value int) {
 	q.items.InsertEnd(value)
 }
 
