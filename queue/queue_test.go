@@ -28,30 +28,30 @@ func TestPeek(t *testing.T) {
 	q.Enqueue(4)
 	q.Dequeue()
 
-	head, hasHead := q.Peek()
-	expectedHead := 2
-	expectedHasHead := true
+	value, hasValue := q.Peek()
+	expectedValue := 2
+	expectedHasValue := true
 
-	if head != expectedHead {
-		t.Errorf("got %v, want %v", head, expectedHead)
+	if value != expectedValue {
+		t.Errorf("got %v, want %v", value, expectedValue)
 	}
 
-	if hasHead != expectedHasHead {
-		t.Errorf("got %v, want %v", hasHead, expectedHasHead)
+	if hasValue != expectedHasValue {
+		t.Errorf("got %v, want %v", hasValue, expectedHasValue)
 	}
 
 	// When the queue is empty
 	q2 := New()
 
-	head, hasHead = q2.Peek()
-	expectedHead = 0
-	expectedHasHead = false
+	value, hasValue = q2.Peek()
+	expectedValue = 0
+	expectedHasValue = false
 
-	if head != expectedHead {
-		t.Errorf("got %v, want %v", head, expectedHead)
+	if value != expectedValue {
+		t.Errorf("got %v, want %v", value, expectedValue)
 	}
 
-	if hasHead != expectedHasHead {
-		t.Errorf("got %v, want %v", hasHead, expectedHasHead)
+	if hasValue != expectedHasValue {
+		t.Errorf("got %v, want %v", hasValue, expectedHasValue)
 	}
 }
