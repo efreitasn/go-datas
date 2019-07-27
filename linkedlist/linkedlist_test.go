@@ -5,11 +5,11 @@ import "testing"
 func TestPeekBeginning(t *testing.T) {
 	ll := New()
 
-	ll.InsertBeginning("bar")
-	ll.InsertEnd("foo")
+	ll.InsertBeginning(1)
+	ll.InsertEnd(2)
 
 	head, hasHead := ll.PeekBeginning()
-	expectedHead := "bar"
+	expectedHead := 1
 	expectedHasHead := true
 
 	if head != expectedHead {
@@ -24,7 +24,7 @@ func TestPeekBeginning(t *testing.T) {
 	ll2 := New()
 
 	head, hasHead = ll2.PeekBeginning()
-	expectedHead = ""
+	expectedHead = 0
 	expectedHasHead = false
 
 	if head != expectedHead {
@@ -39,12 +39,12 @@ func TestPeekBeginning(t *testing.T) {
 func TestInsertBeginning(t *testing.T) {
 	ll := New()
 
-	ll.InsertBeginning("foo")
-	ll.InsertBeginning("bar")
-	ll.InsertBeginning("foobar")
+	ll.InsertBeginning(0)
+	ll.InsertBeginning(3)
+	ll.InsertBeginning(10)
 
 	head, _ := ll.PeekBeginning()
-	expectedHead := "foobar"
+	expectedHead := 10
 
 	if head != expectedHead {
 		t.Errorf("got %v, want %v", head, expectedHead)
@@ -61,13 +61,13 @@ func TestInsertBeginning(t *testing.T) {
 func TestDeleteBeginning(t *testing.T) {
 	ll := New()
 
-	ll.InsertBeginning("foo")
-	ll.InsertBeginning("bar")
-	ll.InsertBeginning("foobar")
+	ll.InsertBeginning(100)
+	ll.InsertBeginning(10)
+	ll.InsertBeginning(20)
 	ll.DeleteBeginning()
 
 	head, _ := ll.PeekBeginning()
-	expectedHead := "bar"
+	expectedHead := 10
 
 	if head != expectedHead {
 		t.Errorf("got %v, want %v", head, expectedHead)
@@ -76,7 +76,7 @@ func TestDeleteBeginning(t *testing.T) {
 	// Delete when there's only one element in the list
 	ll = New()
 
-	ll.InsertBeginning("bar")
+	ll.InsertBeginning(1000)
 	ll.DeleteBeginning()
 
 	_, hasTail := ll.PeekEnd()
@@ -96,11 +96,11 @@ func TestDeleteBeginning(t *testing.T) {
 func TestPeekEnd(t *testing.T) {
 	ll := New()
 
-	ll.InsertEnd("thing1")
-	ll.InsertBeginning("thing2")
+	ll.InsertEnd(10)
+	ll.InsertBeginning(599)
 
 	tail, hasTail := ll.PeekEnd()
-	expectedTail := "thing1"
+	expectedTail := 10
 	expectedHasTail := true
 
 	if tail != expectedTail {
@@ -115,7 +115,7 @@ func TestPeekEnd(t *testing.T) {
 	ll2 := New()
 
 	tail, hasTail = ll2.PeekBeginning()
-	expectedTail = ""
+	expectedTail = 0
 	expectedHasTail = false
 
 	if tail != expectedTail {
@@ -131,12 +131,12 @@ func TestPeekEnd(t *testing.T) {
 func TestInsertEnd(t *testing.T) {
 	ll := New()
 
-	ll.InsertEnd("thing1")
-	ll.InsertEnd("thing2")
-	ll.InsertEnd("thing3")
+	ll.InsertEnd(300)
+	ll.InsertEnd(900)
+	ll.InsertEnd(1203)
 
 	tail, _ := ll.PeekEnd()
-	expectedTail := "thing3"
+	expectedTail := 1203
 
 	if tail != expectedTail {
 		t.Errorf("got %v, want %v", tail, expectedTail)
@@ -153,13 +153,13 @@ func TestInsertEnd(t *testing.T) {
 func TestDeleteEnd(t *testing.T) {
 	ll := New()
 
-	ll.InsertEnd("foo")
-	ll.InsertEnd("bar")
-	ll.InsertEnd("foobar")
+	ll.InsertEnd(399)
+	ll.InsertEnd(1020)
+	ll.InsertEnd(3000)
 	ll.DeleteEnd()
 
 	tail, _ := ll.PeekEnd()
-	expectedTail := "bar"
+	expectedTail := 1020
 
 	if tail != expectedTail {
 		t.Errorf("got %v, want %v", tail, expectedTail)
@@ -168,7 +168,7 @@ func TestDeleteEnd(t *testing.T) {
 	// Delete when there's only one element in the list
 	ll = New()
 
-	ll.InsertEnd("bar")
+	ll.InsertEnd(120)
 	ll.DeleteEnd()
 
 	_, hasTail := ll.PeekEnd()
@@ -188,19 +188,19 @@ func TestDeleteEnd(t *testing.T) {
 func TestContains(t *testing.T) {
 	ll := New()
 
-	ll.InsertEnd("foo")
-	ll.InsertBeginning("bar")
-	ll.InsertEnd("thing1")
-	ll.InsertBeginning("thing2")
+	ll.InsertEnd(2939)
+	ll.InsertBeginning(3948)
+	ll.InsertEnd(9192)
+	ll.InsertBeginning(12)
 
-	result := ll.Contains("bar")
+	result := ll.Contains(9192)
 	expectedResult := true
 
 	if result != expectedResult {
 		t.Errorf("got %v, want %v", result, expectedResult)
 	}
 
-	result = ll.Contains("nothing")
+	result = ll.Contains(100000)
 	expectedResult = false
 
 	if result != expectedResult {

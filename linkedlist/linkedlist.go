@@ -1,10 +1,10 @@
-// Package linkedlist provides functions to create/work with doubly linked lists of strings
+// Package linkedlist provides functions to create/work with doubly linked lists of integers
 package linkedlist
 
 type node struct {
 	next  *node
 	prev  *node
-	value string
+	value int
 }
 
 // LinkedList is a doubly linked list of strings
@@ -19,7 +19,7 @@ func New() *LinkedList {
 	return &LinkedList{}
 }
 
-func (ll *LinkedList) insertFirstNode(value string) {
+func (ll *LinkedList) insertFirstNode(value int) {
 	n := &node{
 		value: value,
 	}
@@ -35,16 +35,16 @@ func (ll *LinkedList) Size() int {
 }
 
 // PeekBeginning returns the first element of the linked list (its head)
-func (ll *LinkedList) PeekBeginning() (value string, ok bool) {
+func (ll *LinkedList) PeekBeginning() (value int, ok bool) {
 	if ll.head == nil {
-		return "", false
+		return 0, false
 	}
 
 	return ll.head.value, true
 }
 
 // InsertBeginning adds a value to the start of the linked list
-func (ll *LinkedList) InsertBeginning(value string) {
+func (ll *LinkedList) InsertBeginning(value int) {
 	n := &node{
 		value: value,
 	}
@@ -80,16 +80,16 @@ func (ll *LinkedList) DeleteBeginning() {
 }
 
 // PeekEnd returns the last element of the linked list (its tail)
-func (ll *LinkedList) PeekEnd() (value string, ok bool) {
+func (ll *LinkedList) PeekEnd() (value int, ok bool) {
 	if ll.tail == nil {
-		return "", false
+		return 0, false
 	}
 
 	return ll.tail.value, true
 }
 
 // InsertEnd adds a value to the end of the linked list
-func (ll *LinkedList) InsertEnd(value string) {
+func (ll *LinkedList) InsertEnd(value int) {
 	n := &node{
 		value: value,
 	}
@@ -125,7 +125,7 @@ func (ll *LinkedList) DeleteEnd() {
 }
 
 // Contains returns whether the list contains the specified element
-func (ll *LinkedList) Contains(value string) bool {
+func (ll *LinkedList) Contains(value int) bool {
 	n := ll.head
 
 	for n != nil {
