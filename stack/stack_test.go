@@ -10,11 +10,16 @@ func TestStack(t *testing.T) {
 	s.Push(3939)
 	s.Pop()
 
-	got := s.Peek()
-	want := 599
+	value, hasValue := s.Peek()
+	expectedValue := 599
+	expectedHasValue := true
 
-	if got != want {
-		t.Errorf("got %v, want %v", got, want)
+	if value != expectedValue {
+		t.Errorf("got %v, want %v", value, expectedValue)
+	}
+
+	if hasValue != expectedHasValue {
+		t.Errorf("got %v, want %v", hasValue, expectedHasValue)
 	}
 }
 
