@@ -1,0 +1,112 @@
+package graph
+
+import "testing"
+
+func TestAddVertex(t *testing.T) {
+	g := New(true)
+	v := 10
+
+	g.AddVertex(v)
+
+	numVertices := g.NumVertices()
+	expectedNumVertices := 1
+
+	if numVertices != expectedNumVertices {
+		t.Errorf("got %v, want %v", numVertices, expectedNumVertices)
+	}
+
+	hasVertex := g.HasVertex(v)
+	expectedHasVertex := true
+
+	if hasVertex != expectedHasVertex {
+		t.Errorf("got %v, want %v", hasVertex, expectedHasVertex)
+	}
+}
+
+func TestAddEdge(t *testing.T) {
+	// Directed graph
+	gDirected := New(true)
+	v1 := 10
+	v2 := 20
+
+	gDirected.AddVertex(v1)
+	gDirected.AddVertex(v2)
+
+	gDirected.AddEdge(v1, v2)
+
+	v1Degree, _ := gDirected.VertexDegree(v1)
+	expectedV1Degree := 1
+
+	if v1Degree != expectedV1Degree {
+		t.Errorf("got %v, want %v", v1Degree, expectedV1Degree)
+	}
+
+	v2Degree, _ := gDirected.VertexDegree(v2)
+	expectedV2Degree := 0
+
+	if v2Degree != expectedV2Degree {
+		t.Errorf("got %v, want %v", v2Degree, expectedV2Degree)
+	}
+
+	// Undirected graph
+	gUndirected := New(false)
+
+	gUndirected.AddVertex(v1)
+	gUndirected.AddVertex(v2)
+
+	gUndirected.AddEdge(v1, v2)
+
+	v1Degree, _ = gUndirected.VertexDegree(v1)
+	expectedV1Degree = 1
+
+	if v1Degree != expectedV1Degree {
+		t.Errorf("got %v, want %v", v1Degree, expectedV1Degree)
+	}
+
+	v2Degree, _ = gUndirected.VertexDegree(v2)
+	expectedV2Degree = 1
+
+	if v2Degree != expectedV2Degree {
+		t.Errorf("got %v, want %v", v2Degree, expectedV2Degree)
+	}
+}
+
+func TestNumEdges(t *testing.T) {
+	// Directed graph
+	gDirected := New(true)
+	v1 := 10
+	v2 := 20
+	v3 := 30
+
+	gDirected.AddVertex(v1)
+	gDirected.AddVertex(v2)
+	gDirected.AddVertex(v3)
+
+	gDirected.AddEdge(v1, v2)
+	gDirected.AddEdge(v2, v3)
+	gDirected.AddEdge(v3, v2)
+
+	numEdges := gDirected.NumEdges()
+	expectedNumEdges := 3
+
+	if numEdges != expectedNumEdges {
+		t.Errorf("got %v, want %v", numEdges, expectedNumEdges)
+	}
+
+	// Undirected graphs
+	gUndirected := New(false)
+
+	gUndirected.AddVertex(v1)
+	gUndirected.AddVertex(v2)
+	gUndirected.AddVertex(v3)
+
+	gUndirected.AddEdge(v1, v2)
+	gUndirected.AddEdge(v2, v3)
+
+	numEdges = gUndirected.NumEdges()
+	expectedNumEdges = 2
+
+	if numEdges != expectedNumEdges {
+		t.Errorf("got %v, want %v", numEdges, expectedNumEdges)
+	}
+}
