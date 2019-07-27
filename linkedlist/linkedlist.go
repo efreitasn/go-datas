@@ -1,4 +1,4 @@
-// Package linkedlist provides functions to create/work with doubly linked lists of integers
+// Package linkedlist provides functions to create/work with doubly linked lists of ints.
 package linkedlist
 
 type node struct {
@@ -7,14 +7,14 @@ type node struct {
 	value int
 }
 
-// LinkedList is a doubly linked list of strings
+// LinkedList is a doubly linked list of ints.
 type LinkedList struct {
 	head *node
 	tail *node
 	size int
 }
 
-// New creates a doubly linked list
+// New creates a doubly linked list.
 func New() *LinkedList {
 	return &LinkedList{}
 }
@@ -29,13 +29,13 @@ func (ll *LinkedList) insertFirstNode(value int) {
 	ll.size++
 }
 
-// Size returns the size of the linked list
+// Size returns the size of the linked list.
 func (ll *LinkedList) Size() int {
 	return ll.size
 }
 
-// PeekBeginning returns the first element of the linked list (its head)
-func (ll *LinkedList) PeekBeginning() (value int, ok bool) {
+// PeekBeginning returns the first value of the linked list (its head).
+func (ll *LinkedList) PeekBeginning() (value int, hasValue bool) {
 	if ll.head == nil {
 		return 0, false
 	}
@@ -43,7 +43,7 @@ func (ll *LinkedList) PeekBeginning() (value int, ok bool) {
 	return ll.head.value, true
 }
 
-// InsertBeginning adds a value to the start of the linked list
+// InsertBeginning adds a value to the start of the linked list.
 func (ll *LinkedList) InsertBeginning(value int) {
 	n := &node{
 		value: value,
@@ -62,7 +62,7 @@ func (ll *LinkedList) InsertBeginning(value int) {
 	ll.size++
 }
 
-// DeleteBeginning removes the first element of the linked list (its head)
+// DeleteBeginning removes the first value of the linked list (its head).
 func (ll *LinkedList) DeleteBeginning() {
 	if ll.Size() == 0 {
 		return
@@ -79,8 +79,8 @@ func (ll *LinkedList) DeleteBeginning() {
 	ll.head = ll.head.next
 }
 
-// PeekEnd returns the last element of the linked list (its tail)
-func (ll *LinkedList) PeekEnd() (value int, ok bool) {
+// PeekEnd returns the last value of the linked list (its tail).
+func (ll *LinkedList) PeekEnd() (value int, hasValue bool) {
 	if ll.tail == nil {
 		return 0, false
 	}
@@ -88,7 +88,7 @@ func (ll *LinkedList) PeekEnd() (value int, ok bool) {
 	return ll.tail.value, true
 }
 
-// InsertEnd adds a value to the end of the linked list
+// InsertEnd adds a value to the end of the linked list.
 func (ll *LinkedList) InsertEnd(value int) {
 	n := &node{
 		value: value,
@@ -107,7 +107,7 @@ func (ll *LinkedList) InsertEnd(value int) {
 	ll.size++
 }
 
-// DeleteEnd removes the last element of the linked list (its tail)
+// DeleteEnd removes the last value of the linked list (its tail).
 func (ll *LinkedList) DeleteEnd() {
 	if ll.Size() == 0 {
 		return
@@ -124,7 +124,7 @@ func (ll *LinkedList) DeleteEnd() {
 	ll.tail = ll.tail.prev
 }
 
-// Contains returns whether the list contains the specified element
+// Contains returns whether the list contains the specified value.
 func (ll *LinkedList) Contains(value int) bool {
 	n := ll.head
 
