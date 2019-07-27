@@ -5,13 +5,13 @@ import "testing"
 func TestStack(t *testing.T) {
 	s := New()
 
-	s.Push("foobar")
-	s.Push("foo")
-	s.Push("bar")
+	s.Push(9)
+	s.Push(599)
+	s.Push(3939)
 	s.Pop()
 
 	got := s.Peek()
-	want := "foo"
+	want := 599
 
 	if got != want {
 		t.Errorf("got %v, want %v", got, want)
@@ -33,8 +33,8 @@ func TestPop(t *testing.T) {
 func TestSize(t *testing.T) {
 	s := New()
 
-	s.Push("foo")
-	s.Push("bar")
+	s.Push(93030)
+	s.Push(1000)
 
 	got := s.Size()
 	want := 2

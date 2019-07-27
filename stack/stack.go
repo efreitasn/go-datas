@@ -1,31 +1,27 @@
-// Package stack provides functions to create/work with stacks of strings.
+// Package stack provides functions to create/work with stacks of ints.
 package stack
 
-// Stack is a stack of strings
+// Stack is a stack of ints
 type Stack struct {
-	items []string
+	items []int
 }
 
 // New creates a stack
 func New() *Stack {
-	var items []string
-
-	return &Stack{
-		items: items,
-	}
+	return &Stack{}
 }
 
 // Peek returns the last element of the stack
-func (s *Stack) Peek() string {
+func (s *Stack) Peek() int {
 	if len(s.items) > 0 {
 		return s.items[len(s.items)-1]
 	}
 
-	return ""
+	return 0
 }
 
 // Push adds an element to the end of the stack
-func (s *Stack) Push(val string) {
+func (s *Stack) Push(val int) {
 	s.items = append(s.items, val)
 }
 
