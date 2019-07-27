@@ -23,6 +23,31 @@ func TestAddVertex(t *testing.T) {
 	}
 }
 
+func TestHasEdge(t *testing.T) {
+	g := New(true)
+	v1 := 10
+	v2 := 20
+
+	g.AddVertex(v1)
+	g.AddVertex(v2)
+
+	g.AddEdge(v1, v2)
+
+	hasEdge := g.HasEdge(v1, v2)
+	expectedHasEdge := true
+
+	if hasEdge != expectedHasEdge {
+		t.Errorf("got %v, want %v", hasEdge, expectedHasEdge)
+	}
+
+	hasEdge = g.HasEdge(v2, v1)
+	expectedHasEdge = false
+
+	if hasEdge != expectedHasEdge {
+		t.Errorf("got %v, want %v", hasEdge, expectedHasEdge)
+	}
+}
+
 func TestAddEdge(t *testing.T) {
 	// Directed graph
 	gDirected := New(true)

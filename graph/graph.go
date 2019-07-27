@@ -50,6 +50,15 @@ func (g *Graph) NumVertices() int {
 	return len(g.adjList)
 }
 
+// HasEdge checks whether the graph contains an edge
+func (g *Graph) HasEdge(v1, v2 int) bool {
+	if !g.HasVertex(v1) || !g.HasVertex(v2) {
+		return false
+	}
+
+	return g.adjList[v1].Contains(v2)
+}
+
 // AddEdge adds an edge to the graph.
 func (g *Graph) AddEdge(v int, v2 int) bool {
 	if !g.HasVertex(v) || !g.HasVertex(v2) {
