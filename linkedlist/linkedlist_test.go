@@ -132,10 +132,8 @@ func TestPeekEnd(t *testing.T) {
 }
 
 func TestInsertEnd(t *testing.T) {
-	ll := New()
+	ll := New(300, 900)
 
-	ll.InsertEnd(300)
-	ll.InsertEnd(900)
 	ll.InsertEnd(1203)
 
 	tail, _ := ll.PeekEnd()
