@@ -38,11 +38,13 @@ func (g *Graph) AddVertex(v int) {
 
 // VertexDegree returns the degree of a vertex in the graph.
 func (g *Graph) VertexDegree(v int) (degree int, found bool) {
-	if !g.HasVertex(v) {
+	adjVertices, found := g.AdjacentVertices(v)
+
+	if !found {
 		return 0, false
 	}
 
-	return g.adjList[v].Size(), true
+	return adjVertices.Size(), true
 }
 
 // AdjacentVertices returns the adjacent vertices of a vertex.
