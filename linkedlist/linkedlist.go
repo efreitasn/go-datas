@@ -1,6 +1,8 @@
 // Package linkedlist provides functions to create/work with doubly linked lists of ints.
 package linkedlist
 
+import "strconv"
+
 type node struct {
 	next  *node
 	prev  *node
@@ -158,4 +160,19 @@ func (ll *LinkedList) Traverse(fromBeginning bool, cb func(v int)) {
 			n = n.prev
 		}
 	}
+}
+
+// String returns the string representation of the linked list
+func (ll *LinkedList) String() string {
+	str := "LinkedList{"
+
+	if ll.Size() == 0 {
+		return str + "}"
+	}
+
+	ll.Traverse(true, func(v int) {
+		str += strconv.Itoa(v) + ", "
+	})
+
+	return str[:len(str)-2] + "}"
 }

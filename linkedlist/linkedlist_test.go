@@ -1,7 +1,9 @@
 package linkedlist
 
-import "reflect"
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestPeekBeginning(t *testing.T) {
 	ll := New()
@@ -242,5 +244,20 @@ func TestTraverse(t *testing.T) {
 
 	if !reflect.DeepEqual(vals, expectedVals) {
 		t.Errorf("got %v, want %v", vals, expectedVals)
+	}
+}
+
+func TestString(t *testing.T) {
+	ll := New()
+
+	ll.InsertEnd(10)
+	ll.InsertEnd(30)
+	ll.InsertEnd(90)
+
+	str := ll.String()
+	expectedStr := "LinkedList{10, 30, 90}"
+
+	if str != expectedStr {
+		t.Errorf("got %v, want %v", str, expectedStr)
 	}
 }
