@@ -45,6 +45,15 @@ func (g *Graph) VertexDegree(v int) (degree int, found bool) {
 	return g.adjList[v].Size(), true
 }
 
+// AdjacentVertices returns the adjacent vertices of a vertex.
+func (g *Graph) AdjacentVertices(v int) (list *linkedlist.LinkedList, found bool) {
+	if !g.HasVertex(v) {
+		return nil, false
+	}
+
+	return g.adjList[v], true
+}
+
 // NumVertices returns the number of vertices in the graph.
 func (g *Graph) NumVertices() int {
 	return len(g.adjList)

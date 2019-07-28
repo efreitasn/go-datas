@@ -1,6 +1,11 @@
 package graph
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+
+	"github.com/efreitasn/go-datas/linkedlist"
+)
 
 func TestAddVertex(t *testing.T) {
 	g := New(true)
@@ -133,5 +138,26 @@ func TestNumEdges(t *testing.T) {
 
 	if numEdges != expectedNumEdges {
 		t.Errorf("got %v, want %v", numEdges, expectedNumEdges)
+	}
+}
+
+func TestAdjacentVertices(t *testing.T) {
+	g := New(true)
+	v1 := 30
+	v2 := 100
+	v3 := 300
+
+	g.AddVertex(v1)
+	g.AddVertex(v2)
+	g.AddVertex(v3)
+
+	g.AddEdge(v1, v2)
+	g.AddEdge(v1, v3)
+
+	adjVertices, _ := g.AdjacentVertices(v1)
+	expectedAdjVertices := linkedlist.New(v2, v3)
+
+	if !reflect.DeepEqual(adjVertices, expectedAdjVertices) {
+		t.Errorf("got %v, want %v", adjVertices, expectedAdjVertices)
 	}
 }
