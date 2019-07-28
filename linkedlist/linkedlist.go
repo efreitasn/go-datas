@@ -17,8 +17,14 @@ type LinkedList struct {
 }
 
 // New creates a doubly linked list.
-func New() *LinkedList {
-	return &LinkedList{}
+func New(values ...int) *LinkedList {
+	ll := &LinkedList{}
+
+	for _, v := range values {
+		ll.InsertEnd(v)
+	}
+
+	return ll
 }
 
 func (ll *LinkedList) insertFirstNode(value int) {
