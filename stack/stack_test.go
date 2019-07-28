@@ -3,10 +3,8 @@ package stack
 import "testing"
 
 func TestStack(t *testing.T) {
-	s := New()
+	s := New(9, 599)
 
-	s.Push(9)
-	s.Push(599)
 	s.Push(3939)
 	s.Pop()
 

@@ -7,8 +7,14 @@ type Stack struct {
 }
 
 // New creates a stack of ints.
-func New() *Stack {
-	return &Stack{}
+func New(values ...int) *Stack {
+	s := &Stack{}
+
+	for _, v := range values {
+		s.Push(v)
+	}
+
+	return s
 }
 
 // Peek returns the last value of the stack.
