@@ -1,5 +1,6 @@
 package linkedlist
 
+import "reflect"
 import "testing"
 
 func TestPeekBeginning(t *testing.T) {
@@ -207,4 +208,39 @@ func TestContains(t *testing.T) {
 		t.Errorf("got %v, want %v", result, expectedResult)
 	}
 
+}
+
+func TestTraverse(t *testing.T) {
+	ll := New()
+
+	ll.InsertBeginning(1)
+	ll.InsertEnd(2)
+	ll.InsertEnd(3)
+	ll.InsertEnd(4)
+	ll.InsertEnd(5)
+	ll.InsertEnd(6)
+
+	vals := []int{}
+	cb := func(v int) {
+		vals = append(vals, v)
+	}
+
+	// From beginning
+	ll.Traverse(true, cb)
+
+	expectedVals := []int{1, 2, 3, 4, 5, 6}
+
+	if !reflect.DeepEqual(vals, expectedVals) {
+		t.Errorf("got %v, want %v", vals, expectedVals)
+	}
+
+	// From end
+	vals = []int{}
+	ll.Traverse(false, cb)
+
+	expectedVals = []int{6, 5, 4, 3, 2, 1}
+
+	if !reflect.DeepEqual(vals, expectedVals) {
+		t.Errorf("got %v, want %v", vals, expectedVals)
+	}
 }

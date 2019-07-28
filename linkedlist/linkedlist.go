@@ -138,3 +138,24 @@ func (ll *LinkedList) Contains(value int) bool {
 
 	return false
 }
+
+// Traverse traverses the linked list by calling a callback at every encountered value.
+func (ll *LinkedList) Traverse(fromBeginning bool, cb func(v int)) {
+	var n *node
+
+	if fromBeginning {
+		n = ll.head
+	} else {
+		n = ll.tail
+	}
+
+	for n != nil {
+		cb(n.value)
+
+		if fromBeginning {
+			n = n.next
+		} else {
+			n = n.prev
+		}
+	}
+}
