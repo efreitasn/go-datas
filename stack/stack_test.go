@@ -22,15 +22,37 @@ func TestStack(t *testing.T) {
 }
 
 func TestPop(t *testing.T) {
-	defer func() {
-		if r := recover(); r != nil {
-			t.Errorf("got a panic, want no panic")
-		}
-	}()
-
 	s := New()
 
-	s.Pop()
+	s.Push(30)
+	s.Push(50)
+
+	value, hasValue := s.Pop()
+	expectedValue := 50
+	expectedHasValue := true
+
+	if value != expectedValue {
+		t.Errorf("got %v, want %v", value, expectedValue)
+	}
+
+	if hasValue != expectedHasValue {
+		t.Errorf("got %v, want %v", hasValue, expectedHasValue)
+	}
+
+	// Empty stack
+	s = New()
+
+	value, hasValue = s.Pop()
+	expectedValue = 0
+	expectedHasValue = false
+
+	if value != expectedValue {
+		t.Errorf("got %v, want %v", value, expectedValue)
+	}
+
+	if hasValue != expectedHasValue {
+		t.Errorf("got %v, want %v", hasValue, expectedHasValue)
+	}
 }
 
 func TestSize(t *testing.T) {

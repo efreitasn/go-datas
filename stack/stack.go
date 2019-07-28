@@ -32,10 +32,14 @@ func (s *Stack) Push(val int) {
 }
 
 // Pop removes the last value of the stack.
-func (s *Stack) Pop() {
-	if s.Size() > 0 {
+func (s *Stack) Pop() (value int, hasValue bool) {
+	value, hasValue = s.Peek()
+
+	if hasValue {
 		s.items = s.items[0:(len(s.items) - 1)]
 	}
+
+	return value, hasValue
 }
 
 // Size returns the size of the stack.
