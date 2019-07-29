@@ -28,9 +28,14 @@ func New(root int) *Tree {
 	}
 }
 
+// HasNode checks whether a node exists in the tree
+func (tr *Tree) HasNode(v int) bool {
+	return tr.g.HasVertex(v)
+}
+
 // AddNode adds a node to the tree.
 func (tr *Tree) AddNode(parent int, v int) (ok bool) {
-	if !tr.g.HasVertex(parent) || tr.g.HasVertex(v) {
+	if !tr.HasNode(parent) || tr.g.HasVertex(v) {
 		return false
 	}
 
@@ -53,7 +58,7 @@ func (tr *Tree) NodeChildren(v int) (children *linkedlist.LinkedList, found bool
 
 // NodeHeight returns the number of edges from a node to its deepest descendent (the height of a node) using DFS.
 func (tr *Tree) NodeHeight(v int) (height int, found bool) {
-	if !tr.g.HasVertex(v) {
+	if !tr.HasNode(v) {
 		return 0, false
 	}
 
@@ -86,7 +91,7 @@ func (tr *Tree) nodeHeightRecursive(v int) int {
 
 // NodeDepth returns the number of edges from the root to a node (the depth of a node) using DFS.
 func (tr *Tree) NodeDepth(v int) (depth int, found bool) {
-	if !tr.g.HasVertex(v) {
+	if !tr.HasNode(v) {
 		return 0, false
 	}
 

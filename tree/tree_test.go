@@ -212,3 +212,26 @@ func TestHeight(t *testing.T) {
 		t.Errorf("got %v, want %v", height, expectedHeight)
 	}
 }
+
+func TestHasNode(t *testing.T) {
+	tr := New(1)
+
+	tr.AddNode(1, 10)
+	tr.AddNode(10, 20)
+
+	hasNode := tr.HasNode(10)
+	expectedHasNode := true
+
+	if hasNode != expectedHasNode {
+		t.Errorf("got %v, want %v", hasNode, expectedHasNode)
+	}
+
+	// When the node doesn't exist
+	hasNode = tr.HasNode(100)
+	expectedHasNode = false
+
+	if hasNode != expectedHasNode {
+		t.Errorf("got %v, want %v", hasNode, expectedHasNode)
+	}
+
+}
