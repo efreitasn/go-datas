@@ -31,7 +31,7 @@ func (s *Stack) Push(val int) {
 	s.items = append(s.items, val)
 }
 
-// Pop removes the last value of the stack.
+// Pop removes and returns the last value of the stack.
 func (s *Stack) Pop() (value int, hasValue bool) {
 	value, hasValue = s.Peek()
 
