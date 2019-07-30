@@ -78,7 +78,7 @@ func (bts *BinarySearchTree) Root() *Node {
 	return bts.root
 }
 
-// Height returns the number of edges between the root of the tree and its deepest descendent, i.e. the heigh of the root.
+// Height returns the number of edges between the root of the tree and its deepest descendent, i.e. the height of the root.
 func (bts *BinarySearchTree) Height() int {
 	return bts.NodeHeight(bts.Root())
 }
