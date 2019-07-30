@@ -79,12 +79,15 @@ func (ll *LinkedList) DeleteBeginning() {
 	if ll.Size() == 1 {
 		ll.head = nil
 		ll.tail = nil
+		ll.size = 0
 
 		return
 	}
 
 	ll.head.next.prev = nil
 	ll.head = ll.head.next
+
+	ll.size--
 }
 
 // PeekEnd returns the last value of the linked list (its tail).
@@ -124,12 +127,14 @@ func (ll *LinkedList) DeleteEnd() {
 	if ll.Size() == 1 {
 		ll.tail = nil
 		ll.head = nil
+		ll.size = 0
 
 		return
 	}
 
 	ll.tail.prev.next = nil
 	ll.tail = ll.tail.prev
+	ll.size--
 }
 
 // Contains returns whether the list contains the specified value.
