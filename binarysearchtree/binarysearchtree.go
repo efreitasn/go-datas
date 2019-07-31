@@ -40,6 +40,37 @@ func insertRecursive(previous *Node, current *Node, v int) (node *Node, ok bool)
 	return current, ok
 }
 
+// Remove removes a node from the binary search tree.
+func (bts *BinarySearchTree) Remove(n *Node) {
+	if n.Left() == nil && n.Right() == nil {
+		p := n.Parent()
+
+		if p.Left() == n {
+			p.left = nil
+		} else {
+			p.right = nil
+		}
+	} else if n.Left() != nil && n.Right() != nil {
+		successor := n.Right()
+
+		for successor.Left() != nil {
+			successor = successor.Left()
+		}
+
+		n.value = successor.Value()
+
+		bts.Remove(successor)
+
+		return
+	} else if n.Left() != nil {
+		n.value = n.Left().Value()
+		n.left = nil
+	} else {
+		n.value = n.Right().Value()
+		n.right = nil
+	}
+}
+
 // NodeHeight returns the number of edges from a node to its deepest descendent (the height of a node).
 func (bts *BinarySearchTree) NodeHeight(n *Node) int {
 	return nodeHeightRecursive(n)
