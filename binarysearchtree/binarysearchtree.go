@@ -104,6 +104,25 @@ func nodeDepthRecursive(n *Node) int {
 	return nodeDepthRecursive(n.Parent()) + 1
 }
 
+// Find returns the node of the binary search value that has a specific value.
+func (bts *BinarySearchTree) Find(v int) (n *Node, found bool) {
+	n = bts.Root()
+
+	for n != nil {
+		nV := n.Value()
+
+		if v < nV {
+			n = n.Left()
+		} else if v > nV {
+			n = n.Right()
+		} else {
+			return n, true
+		}
+	}
+
+	return n, n == nil
+}
+
 // Root returns the root of the binary search tree.
 func (bts *BinarySearchTree) Root() *Node {
 	return bts.root

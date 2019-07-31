@@ -127,3 +127,31 @@ func TestRemove(t *testing.T) {
 		t.Errorf("got %v, want %v", vals, expectedVals)
 	}
 }
+
+func TestFind(t *testing.T) {
+	bts := New()
+
+	bts.Insert(100)
+	bts.Insert(90)
+	bts.Insert(80)
+	bts.Insert(95)
+	bts.Insert(92)
+	bts.Insert(96)
+	bts.Insert(93)
+	bts.Insert(120)
+	bts.Insert(110)
+	bts.Insert(130)
+
+	// When a node with the provided value exists
+	n, found := bts.Find(92)
+	expectedN := bts.Root().Left().Right().Left()
+	expectedFound := true
+
+	if !reflect.DeepEqual(n, expectedN) {
+		t.Errorf("got %v, want %v", n, expectedN)
+	}
+
+	if found != expectedFound {
+		t.Errorf("got %v, want %v", found, expectedFound)
+	}
+}
