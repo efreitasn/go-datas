@@ -12,7 +12,7 @@ func TestSize(t *testing.T) {
 	q.Dequeue()
 
 	size := q.Size()
-	expectedSize := 4
+	expectedSize := 3
 
 	if size != expectedSize {
 		t.Errorf("got %v, want %v", size, expectedSize)
