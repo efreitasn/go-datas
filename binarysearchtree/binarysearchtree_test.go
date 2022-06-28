@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/efreitasn/go-algs/dfs"
 	. "github.com/efreitasn/go-datas/binarysearchtree"
 )
 
@@ -86,46 +87,46 @@ func TestHeight(t *testing.T) {
 	}
 }
 
-// func TestRemove(t *testing.T) {
-// 	bts := New[int]()
+func TestRemove(t *testing.T) {
+	bts := New[int]()
 
-// 	bts.Insert(100)
-// 	bts.Insert(90)
-// 	bts.Insert(80)
-// 	bts.Insert(95)
-// 	bts.Insert(92)
-// 	bts.Insert(96)
-// 	bts.Insert(93)
-// 	bts.Insert(120)
-// 	bts.Insert(110)
-// 	bts.Insert(130)
+	bts.Insert(100)
+	bts.Insert(90)
+	bts.Insert(80)
+	bts.Insert(95)
+	bts.Insert(92)
+	bts.Insert(96)
+	bts.Insert(93)
+	bts.Insert(120)
+	bts.Insert(110)
+	bts.Insert(130)
 
-// 	bts.Remove(bts.Root().Left().Right())
+	bts.Remove(bts.Root().Left().Right())
 
-// 	vals := make([]int, 0, bts.Size())
+	vals := make([]int, 0, bts.Size())
 
-// 	dfs.BinarySearchTreeNLR(bts, func(v int) bool {
-// 		vals = append(vals, v)
+	dfs.BinarySearchTreeNLR(bts, func(v int) bool {
+		vals = append(vals, v)
 
-// 		return true
-// 	})
+		return true
+	})
 
-// 	expectedVals := []int{
-// 		100,
-// 		90,
-// 		80,
-// 		96,
-// 		92,
-// 		93,
-// 		120,
-// 		110,
-// 		130,
-// 	}
+	expectedVals := []int{
+		100,
+		90,
+		80,
+		96,
+		92,
+		93,
+		120,
+		110,
+		130,
+	}
 
-// 	if !reflect.DeepEqual(vals, expectedVals) {
-// 		t.Errorf("got %v, want %v", vals, expectedVals)
-// 	}
-// }
+	if !reflect.DeepEqual(vals, expectedVals) {
+		t.Errorf("got %v, want %v", vals, expectedVals)
+	}
+}
 
 func TestFind(t *testing.T) {
 	bts := New[int]()
