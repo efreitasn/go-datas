@@ -3,7 +3,7 @@ package queue
 import "testing"
 
 func TestSize(t *testing.T) {
-	q := New()
+	q := New[int]()
 
 	q.Enqueue(1)
 	q.Enqueue(2)
@@ -20,7 +20,7 @@ func TestSize(t *testing.T) {
 }
 
 func TestPeek(t *testing.T) {
-	q := New()
+	q := New[int]()
 
 	q.Enqueue(1)
 	q.Enqueue(2)
@@ -41,7 +41,7 @@ func TestPeek(t *testing.T) {
 	}
 
 	// When the queue is empty
-	q2 := New()
+	q2 := New[int]()
 
 	value, hasValue = q2.Peek()
 	expectedValue = 0
