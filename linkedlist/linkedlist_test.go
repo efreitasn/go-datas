@@ -6,7 +6,7 @@ import (
 )
 
 func TestPeekBeginning(t *testing.T) {
-	ll := New()
+	ll := New[int]()
 
 	ll.InsertBeginning(1)
 	ll.InsertEnd(2)
@@ -24,7 +24,7 @@ func TestPeekBeginning(t *testing.T) {
 	}
 
 	// When the linked list is empty
-	ll2 := New()
+	ll2 := New[int]()
 
 	head, hasHead = ll2.PeekBeginning()
 	expectedHead = 0
@@ -40,7 +40,7 @@ func TestPeekBeginning(t *testing.T) {
 }
 
 func TestInsertBeginning(t *testing.T) {
-	ll := New()
+	ll := New[int]()
 
 	ll.InsertBeginning(0)
 	ll.InsertBeginning(3)
@@ -62,7 +62,7 @@ func TestInsertBeginning(t *testing.T) {
 }
 
 func TestDeleteBeginning(t *testing.T) {
-	ll := New()
+	ll := New[int]()
 
 	ll.InsertBeginning(100)
 	ll.InsertBeginning(10)
@@ -77,7 +77,7 @@ func TestDeleteBeginning(t *testing.T) {
 	}
 
 	// Delete when there's only one element in the list
-	ll = New()
+	ll = New[int]()
 
 	ll.InsertBeginning(1000)
 	ll.DeleteBeginning()
@@ -97,7 +97,7 @@ func TestDeleteBeginning(t *testing.T) {
 }
 
 func TestPeekEnd(t *testing.T) {
-	ll := New()
+	ll := New[int]()
 
 	ll.InsertEnd(10)
 	ll.InsertBeginning(599)
@@ -115,7 +115,7 @@ func TestPeekEnd(t *testing.T) {
 	}
 
 	// When the linked list is empty
-	ll2 := New()
+	ll2 := New[int]()
 
 	tail, hasTail = ll2.PeekBeginning()
 	expectedTail = 0
@@ -152,7 +152,7 @@ func TestInsertEnd(t *testing.T) {
 }
 
 func TestDeleteEnd(t *testing.T) {
-	ll := New()
+	ll := New[int]()
 
 	ll.InsertEnd(399)
 	ll.InsertEnd(1020)
@@ -167,7 +167,7 @@ func TestDeleteEnd(t *testing.T) {
 	}
 
 	// Delete when there's only one element in the list
-	ll = New()
+	ll = New[int]()
 
 	ll.InsertEnd(120)
 	ll.DeleteEnd()
@@ -186,32 +186,8 @@ func TestDeleteEnd(t *testing.T) {
 	}
 }
 
-func TestContains(t *testing.T) {
-	ll := New()
-
-	ll.InsertEnd(2939)
-	ll.InsertBeginning(3948)
-	ll.InsertEnd(9192)
-	ll.InsertBeginning(12)
-
-	result := ll.Contains(9192)
-	expectedResult := true
-
-	if result != expectedResult {
-		t.Errorf("got %v, want %v", result, expectedResult)
-	}
-
-	result = ll.Contains(100000)
-	expectedResult = false
-
-	if result != expectedResult {
-		t.Errorf("got %v, want %v", result, expectedResult)
-	}
-
-}
-
 func TestTraverse(t *testing.T) {
-	ll := New()
+	ll := New[int]()
 
 	ll.InsertBeginning(1)
 	ll.InsertEnd(2)
@@ -221,8 +197,10 @@ func TestTraverse(t *testing.T) {
 	ll.InsertEnd(6)
 
 	vals := []int{}
-	cb := func(v int) {
+	cb := func(v int) bool {
 		vals = append(vals, v)
+
+		return true
 	}
 
 	// From beginning
@@ -243,10 +221,28 @@ func TestTraverse(t *testing.T) {
 	if !reflect.DeepEqual(vals, expectedVals) {
 		t.Errorf("got %v, want %v", vals, expectedVals)
 	}
+
+	// Partial
+	vals = []int{}
+	ll.Traverse(true, func(v int) bool {
+		if v >= 5 {
+			return false
+		}
+
+		vals = append(vals, v)
+
+		return true
+	})
+
+	expectedVals = []int{1, 2, 3, 4}
+
+	if !reflect.DeepEqual(vals, expectedVals) {
+		t.Errorf("got %v, want %v", vals, expectedVals)
+	}
 }
 
 func TestString(t *testing.T) {
-	ll := New()
+	ll := New[int]()
 
 	ll.InsertEnd(10)
 	ll.InsertEnd(30)

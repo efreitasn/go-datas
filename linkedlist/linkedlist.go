@@ -1,24 +1,28 @@
-// Package linkedlist provides functions to create/work with doubly linked lists of ints.
+// Package linkedlist provides functions to create/work with generic doubly linked lists.
 package linkedlist
 
-import "strconv"
+import (
+	"fmt"
+	"strings"
+)
 
-type node struct {
-	next  *node
-	prev  *node
-	value int
+type node[T any] struct {
+	next  *node[T]
+	prev  *node[T]
+	value T
 }
 
-// LinkedList is a doubly linked list of ints.
-type LinkedList struct {
-	head *node
-	tail *node
+// LinkedList is a doubly linked list of T.
+type LinkedList[T any] struct {
+	head *node[T]
+	tail *node[T]
 	size int
 }
 
 // New creates a doubly linked list.
-func New(values ...int) *LinkedList {
-	ll := &LinkedList{}
+// It panics if the given comparing function is nil.
+func New[T any](values ...T) *LinkedList[T] {
+	ll := &LinkedList[T]{}
 
 	for _, v := range values {
 		ll.InsertEnd(v)
@@ -27,8 +31,8 @@ func New(values ...int) *LinkedList {
 	return ll
 }
 
-func (ll *LinkedList) insertFirstNode(value int) {
-	n := &node{
+func (ll *LinkedList[T]) insertFirstNode(value T) {
+	n := &node[T]{
 		value: value,
 	}
 
@@ -38,22 +42,22 @@ func (ll *LinkedList) insertFirstNode(value int) {
 }
 
 // Size returns the size of the linked list.
-func (ll *LinkedList) Size() int {
+func (ll *LinkedList[T]) Size() int {
 	return ll.size
 }
 
 // PeekBeginning returns the first value of the linked list (its head).
-func (ll *LinkedList) PeekBeginning() (value int, hasValue bool) {
+func (ll *LinkedList[T]) PeekBeginning() (value T, hasValue bool) {
 	if ll.head == nil {
-		return 0, false
+		return *new(T), false
 	}
 
 	return ll.head.value, true
 }
 
 // InsertBeginning adds a value to the start of the linked list.
-func (ll *LinkedList) InsertBeginning(value int) {
-	n := &node{
+func (ll *LinkedList[T]) InsertBeginning(value T) {
+	n := &node[T]{
 		value: value,
 	}
 
@@ -71,7 +75,7 @@ func (ll *LinkedList) InsertBeginning(value int) {
 }
 
 // DeleteBeginning removes the first value of the linked list (its head).
-func (ll *LinkedList) DeleteBeginning() {
+func (ll *LinkedList[T]) DeleteBeginning() {
 	if ll.Size() == 0 {
 		return
 	}
@@ -91,17 +95,17 @@ func (ll *LinkedList) DeleteBeginning() {
 }
 
 // PeekEnd returns the last value of the linked list (its tail).
-func (ll *LinkedList) PeekEnd() (value int, hasValue bool) {
+func (ll *LinkedList[T]) PeekEnd() (value T, hasValue bool) {
 	if ll.tail == nil {
-		return 0, false
+		return *new(T), false
 	}
 
 	return ll.tail.value, true
 }
 
 // InsertEnd adds a value to the end of the linked list.
-func (ll *LinkedList) InsertEnd(value int) {
-	n := &node{
+func (ll *LinkedList[T]) InsertEnd(value T) {
+	n := &node[T]{
 		value: value,
 	}
 
@@ -119,7 +123,7 @@ func (ll *LinkedList) InsertEnd(value int) {
 }
 
 // DeleteEnd removes the last value of the linked list (its tail).
-func (ll *LinkedList) DeleteEnd() {
+func (ll *LinkedList[T]) DeleteEnd() {
 	if ll.Size() == 0 {
 		return
 	}
@@ -137,24 +141,10 @@ func (ll *LinkedList) DeleteEnd() {
 	ll.size--
 }
 
-// Contains returns whether the list contains the specified value.
-func (ll *LinkedList) Contains(value int) bool {
-	n := ll.head
-
-	for n != nil {
-		if n.value == value {
-			return true
-		}
-
-		n = n.next
-	}
-
-	return false
-}
-
 // Traverse traverses the linked list by calling a callback at every encountered value.
-func (ll *LinkedList) Traverse(fromBeginning bool, cb func(v int)) {
-	var n *node
+// If the callback returns false, then the traversing is stopped.
+func (ll *LinkedList[T]) Traverse(fromBeginning bool, cb func(v T) bool) {
+	var n *node[T]
 
 	if fromBeginning {
 		n = ll.head
@@ -163,7 +153,9 @@ func (ll *LinkedList) Traverse(fromBeginning bool, cb func(v int)) {
 	}
 
 	for n != nil {
-		cb(n.value)
+		if !cb(n.value) {
+			return
+		}
 
 		if fromBeginning {
 			n = n.next
@@ -174,16 +166,30 @@ func (ll *LinkedList) Traverse(fromBeginning bool, cb func(v int)) {
 }
 
 // String returns the string representation of the linked list
-func (ll *LinkedList) String() string {
-	str := "LinkedList{"
+func (ll *LinkedList[T]) String() string {
+	var sb strings.Builder
+	sb.WriteString("LinkedList{")
 
-	if ll.Size() == 0 {
-		return str + "}"
+	switch {
+	case ll.Size() == 0:
+		sb.WriteString("}")
+	default:
+		first := true
+
+		ll.Traverse(true, func(v T) bool {
+			if !first {
+				sb.WriteString(", ")
+			}
+
+			sb.WriteString(fmt.Sprint(v))
+
+			first = false
+
+			return true
+		})
+
+		sb.WriteString("}")
 	}
 
-	ll.Traverse(true, func(v int) {
-		str += strconv.Itoa(v) + ", "
-	})
-
-	return str[:len(str)-2] + "}"
+	return sb.String()
 }
