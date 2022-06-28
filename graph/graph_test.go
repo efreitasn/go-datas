@@ -8,7 +8,7 @@ import (
 )
 
 func TestAddVertex(t *testing.T) {
-	g := New(true)
+	g := New[int](true)
 	v := 10
 
 	g.AddVertex(v)
@@ -29,7 +29,7 @@ func TestAddVertex(t *testing.T) {
 }
 
 func TestHasEdge(t *testing.T) {
-	g := New(true)
+	g := New[int](true)
 	v1 := 10
 	v2 := 20
 
@@ -55,7 +55,7 @@ func TestHasEdge(t *testing.T) {
 
 func TestAddEdge(t *testing.T) {
 	// Directed graph
-	gDirected := New(true)
+	gDirected := New[int](true)
 	v1 := 10
 	v2 := 20
 
@@ -79,7 +79,7 @@ func TestAddEdge(t *testing.T) {
 	}
 
 	// Undirected graph
-	gUndirected := New(false)
+	gUndirected := New[int](false)
 
 	gUndirected.AddVertex(v1)
 	gUndirected.AddVertex(v2)
@@ -103,7 +103,7 @@ func TestAddEdge(t *testing.T) {
 
 func TestNumEdges(t *testing.T) {
 	// Directed graph
-	gDirected := New(true)
+	gDirected := New[int](true)
 	v1 := 10
 	v2 := 20
 	v3 := 30
@@ -124,7 +124,7 @@ func TestNumEdges(t *testing.T) {
 	}
 
 	// Undirected graphs
-	gUndirected := New(false)
+	gUndirected := New[int](false)
 
 	gUndirected.AddVertex(v1)
 	gUndirected.AddVertex(v2)
@@ -142,7 +142,7 @@ func TestNumEdges(t *testing.T) {
 }
 
 func TestAdjacentVertices(t *testing.T) {
-	g := New(true)
+	g := New[int](true)
 	v1 := 30
 	v2 := 100
 	v3 := 300
