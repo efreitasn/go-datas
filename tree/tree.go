@@ -1,5 +1,5 @@
 /*
-Package tree provides functions to create/work with trees of ints.
+Package tree provides functions to create/work with generic trees
 
 The tree is implemented using an adjacency list, since it uses the graph package under the hood.
 */
@@ -10,31 +10,31 @@ import (
 	"github.com/efreitasn/go-datas/linkedlist"
 )
 
-// Tree is a tree of ints.
-type Tree struct {
-	g    *graph.Graph
-	root int
+// Tree is a tree of a comparable type T.
+type Tree[T comparable] struct {
+	g    *graph.Graph[T]
+	root T
 }
 
-// New create a tree of ints.
-func New(root int) *Tree {
-	g := graph.New(true)
+// New creates a tree of a comparable type T.
+func New[T comparable](root T) *Tree[T] {
+	g := graph.New[T](true)
 
 	g.AddVertex(root)
 
-	return &Tree{
+	return &Tree[T]{
 		g,
 		root,
 	}
 }
 
 // HasNode checks whether a node exists in the tree
-func (tr *Tree) HasNode(v int) bool {
+func (tr *Tree[T]) HasNode(v T) bool {
 	return tr.g.HasVertex(v)
 }
 
 // AddNode adds a node to the tree.
-func (tr *Tree) AddNode(parent int, v int) (ok bool) {
+func (tr *Tree[T]) AddNode(parent, v T) (ok bool) {
 	if !tr.HasNode(parent) || tr.g.HasVertex(v) {
 		return false
 	}
@@ -46,7 +46,7 @@ func (tr *Tree) AddNode(parent int, v int) (ok bool) {
 }
 
 // NodeChildren returns the children of a node.
-func (tr *Tree) NodeChildren(v int) (children *linkedlist.LinkedList, found bool) {
+func (tr *Tree[T]) NodeChildren(v T) (children *linkedlist.LinkedList[T], found bool) {
 	adjVertices, found := tr.g.AdjacentVertices(v)
 
 	if !found {
@@ -57,7 +57,7 @@ func (tr *Tree) NodeChildren(v int) (children *linkedlist.LinkedList, found bool
 }
 
 // NodeHeight returns the number of edges from a node to its deepest descendent (the height of a node) using DFS.
-func (tr *Tree) NodeHeight(v int) (height int, found bool) {
+func (tr *Tree[T]) NodeHeight(v T) (height int, found bool) {
 	if !tr.HasNode(v) {
 		return 0, false
 	}
@@ -65,7 +65,7 @@ func (tr *Tree) NodeHeight(v int) (height int, found bool) {
 	return tr.nodeHeightRecursive(v), true
 }
 
-func (tr *Tree) nodeHeightRecursive(v int) int {
+func (tr *Tree[T]) nodeHeightRecursive(v T) int {
 	adjVertices, _ := tr.g.AdjacentVertices(v)
 
 	if adjVertices.Size() == 0 {
@@ -74,8 +74,10 @@ func (tr *Tree) nodeHeightRecursive(v int) int {
 
 	var heights []int
 
-	adjVertices.Traverse(true, func(adjV int) {
+	adjVertices.Traverse(true, func(adjV T) bool {
 		heights = append(heights, tr.nodeHeightRecursive(adjV))
+
+		return true
 	})
 
 	var maxHeight int
@@ -90,7 +92,7 @@ func (tr *Tree) nodeHeightRecursive(v int) int {
 }
 
 // NodeDepth returns the number of edges from the root to a node (the depth of a node) using DFS.
-func (tr *Tree) NodeDepth(v int) (depth int, found bool) {
+func (tr *Tree[T]) NodeDepth(v T) (depth int, found bool) {
 	if !tr.HasNode(v) {
 		return 0, false
 	}
@@ -105,7 +107,7 @@ type nodeDepthItem struct {
 	vFound bool
 }
 
-func (tr *Tree) nodeDepthRecursive(v, valueToFind int) (depth int, vFound bool) {
+func (tr *Tree[T]) nodeDepthRecursive(v, valueToFind T) (depth int, vFound bool) {
 	adjVertices, _ := tr.g.AdjacentVertices(v)
 
 	if adjVertices.Size() == 0 || v == valueToFind {
@@ -114,7 +116,7 @@ func (tr *Tree) nodeDepthRecursive(v, valueToFind int) (depth int, vFound bool) 
 
 	var depths []nodeDepthItem
 
-	adjVertices.Traverse(true, func(adjV int) {
+	adjVertices.Traverse(true, func(adjV T) bool {
 		depth, vFound := tr.nodeDepthRecursive(adjV, valueToFind)
 
 		depths = append(
@@ -124,6 +126,8 @@ func (tr *Tree) nodeDepthRecursive(v, valueToFind int) (depth int, vFound bool) 
 				vFound,
 			},
 		)
+
+		return true
 	})
 
 	for _, d := range depths {
@@ -136,18 +140,18 @@ func (tr *Tree) nodeDepthRecursive(v, valueToFind int) (depth int, vFound bool) 
 }
 
 // Root returns the root node of the tree.
-func (tr *Tree) Root() int {
+func (tr *Tree[T]) Root() T {
 	return tr.root
 }
 
 // Height returns the number of edges between the root of the tree and its deepest descendent, i.e. the heigh of the root.
-func (tr *Tree) Height() int {
+func (tr *Tree[T]) Height() int {
 	height, _ := tr.NodeHeight(tr.Root())
 
 	return height
 }
 
 // Size returns the number of nodes in the tree.
-func (tr *Tree) Size() int {
+func (tr *Tree[T]) Size() int {
 	return tr.g.NumVertices()
 }
