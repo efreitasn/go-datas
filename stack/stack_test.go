@@ -22,7 +22,7 @@ func TestStack(t *testing.T) {
 }
 
 func TestPop(t *testing.T) {
-	s := New()
+	s := New[int]()
 
 	s.Push(30)
 	s.Push(50)
@@ -40,7 +40,7 @@ func TestPop(t *testing.T) {
 	}
 
 	// Empty stack
-	s = New()
+	s = New[int]()
 
 	value, hasValue = s.Pop()
 	expectedValue = 0
@@ -56,7 +56,7 @@ func TestPop(t *testing.T) {
 }
 
 func TestSize(t *testing.T) {
-	s := New()
+	s := New[int]()
 
 	s.Push(93030)
 	s.Push(1000)

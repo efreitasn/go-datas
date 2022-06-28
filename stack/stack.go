@@ -1,14 +1,14 @@
-// Package stack provides functions to create/work with stacks of ints.
+// Package stack provides functions to create/work with generic stacks.
 package stack
 
-// Stack is a stack of ints.
-type Stack struct {
-	items []int
+// Stack is a stack of T.
+type Stack[T any] struct {
+	items []T
 }
 
 // New creates a stack of ints.
-func New(values ...int) *Stack {
-	s := &Stack{}
+func New[T any](values ...T) *Stack[T] {
+	s := &Stack[T]{}
 
 	for _, v := range values {
 		s.Push(v)
@@ -18,21 +18,21 @@ func New(values ...int) *Stack {
 }
 
 // Peek returns the last value of the stack.
-func (s *Stack) Peek() (value int, hasValue bool) {
+func (s *Stack[T]) Peek() (value T, hasValue bool) {
 	if len(s.items) == 0 {
-		return 0, false
+		return *new(T), false
 	}
 
 	return s.items[len(s.items)-1], true
 }
 
 // Push adds an value to the end of the stack.
-func (s *Stack) Push(val int) {
+func (s *Stack[T]) Push(val T) {
 	s.items = append(s.items, val)
 }
 
 // Pop removes and returns the last value of the stack.
-func (s *Stack) Pop() (value int, hasValue bool) {
+func (s *Stack[T]) Pop() (value T, hasValue bool) {
 	value, hasValue = s.Peek()
 
 	if hasValue {
@@ -43,6 +43,6 @@ func (s *Stack) Pop() (value int, hasValue bool) {
 }
 
 // Size returns the size of the stack.
-func (s *Stack) Size() int {
+func (s *Stack[T]) Size() int {
 	return len(s.items)
 }
