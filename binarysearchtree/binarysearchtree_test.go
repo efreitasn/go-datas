@@ -5,24 +5,24 @@ import (
 	"testing"
 
 	"github.com/efreitasn/go-algs/dfs"
-	. "github.com/efreitasn/go-datas/binarysearchtree"
+	"github.com/efreitasn/go-datas/binarysearchtree"
 )
 
 func TestInsert(t *testing.T) {
-	bts := New[int]()
+	bst := binarysearchtree.New[int]()
 
-	bts.Insert(10)
-	bts.Insert(30)
-	bts.Insert(50)
+	bst.Insert(10)
+	bst.Insert(30)
+	bst.Insert(50)
 
-	size := bts.Size()
+	size := bst.Size()
 	expectedSize := 3
 
 	if size != expectedSize {
 		t.Errorf("got %v, want %v", size, expectedSize)
 	}
 
-	rootValue := bts.Root().Value()
+	rootValue := bst.Root().Value()
 	expectedRootValue := 10
 
 	if rootValue != expectedRootValue {
@@ -31,17 +31,17 @@ func TestInsert(t *testing.T) {
 }
 
 func TestNodeHeight(t *testing.T) {
-	bts := New[int]()
+	bst := binarysearchtree.New[int]()
 
-	bts.Insert(100)
-	bts.Insert(90)
-	bts.Insert(80)
-	bts.Insert(95)
-	bts.Insert(120)
-	bts.Insert(110)
-	bts.Insert(130)
+	bst.Insert(100)
+	bst.Insert(90)
+	bst.Insert(80)
+	bst.Insert(95)
+	bst.Insert(120)
+	bst.Insert(110)
+	bst.Insert(130)
 
-	height := bts.NodeHeight(bts.Root().Left())
+	height := bst.NodeHeight(bst.Root().Left())
 	expectedHeight := 1
 
 	if height != expectedHeight {
@@ -50,17 +50,17 @@ func TestNodeHeight(t *testing.T) {
 }
 
 func TestNodeDepth(t *testing.T) {
-	bts := New[int]()
+	bst := binarysearchtree.New[int]()
 
-	bts.Insert(100)
-	bts.Insert(90)
-	bts.Insert(80)
-	bts.Insert(95)
-	bts.Insert(120)
-	bts.Insert(110)
-	bts.Insert(130)
+	bst.Insert(100)
+	bst.Insert(90)
+	bst.Insert(80)
+	bst.Insert(95)
+	bst.Insert(120)
+	bst.Insert(110)
+	bst.Insert(130)
 
-	depth := bts.NodeDepth(bts.Root().Left().Left())
+	depth := bst.NodeDepth(bst.Root().Left().Left())
 	expectedDepth := 2
 
 	if depth != expectedDepth {
@@ -69,17 +69,17 @@ func TestNodeDepth(t *testing.T) {
 }
 
 func TestHeight(t *testing.T) {
-	bts := New[int]()
+	bst := binarysearchtree.New[int]()
 
-	bts.Insert(100)
-	bts.Insert(90)
-	bts.Insert(80)
-	bts.Insert(95)
-	bts.Insert(120)
-	bts.Insert(110)
-	bts.Insert(130)
+	bst.Insert(100)
+	bst.Insert(90)
+	bst.Insert(80)
+	bst.Insert(95)
+	bst.Insert(120)
+	bst.Insert(110)
+	bst.Insert(130)
 
-	height := bts.Height()
+	height := bst.Height()
 	expectedHeight := 2
 
 	if height != expectedHeight {
@@ -88,24 +88,24 @@ func TestHeight(t *testing.T) {
 }
 
 func TestRemove(t *testing.T) {
-	bts := New[int]()
+	bst := binarysearchtree.New[int]()
 
-	bts.Insert(100)
-	bts.Insert(90)
-	bts.Insert(80)
-	bts.Insert(95)
-	bts.Insert(92)
-	bts.Insert(96)
-	bts.Insert(93)
-	bts.Insert(120)
-	bts.Insert(110)
-	bts.Insert(130)
+	bst.Insert(100)
+	bst.Insert(90)
+	bst.Insert(80)
+	bst.Insert(95)
+	bst.Insert(92)
+	bst.Insert(96)
+	bst.Insert(93)
+	bst.Insert(120)
+	bst.Insert(110)
+	bst.Insert(130)
 
-	bts.Remove(bts.Root().Left().Right())
+	bst.Remove(bst.Root().Left().Right())
 
-	vals := make([]int, 0, bts.Size())
+	vals := make([]int, 0, bst.Size())
 
-	dfs.BinarySearchTreeNLR(bts, func(v int) bool {
+	dfs.BinarySearchTreeNLR(bst, func(v int) bool {
 		vals = append(vals, v)
 
 		return true
@@ -129,22 +129,22 @@ func TestRemove(t *testing.T) {
 }
 
 func TestFind(t *testing.T) {
-	bts := New[int]()
+	bst := binarysearchtree.New[int]()
 
-	bts.Insert(100)
-	bts.Insert(90)
-	bts.Insert(80)
-	bts.Insert(95)
-	bts.Insert(92)
-	bts.Insert(96)
-	bts.Insert(93)
-	bts.Insert(120)
-	bts.Insert(110)
-	bts.Insert(130)
+	bst.Insert(100)
+	bst.Insert(90)
+	bst.Insert(80)
+	bst.Insert(95)
+	bst.Insert(92)
+	bst.Insert(96)
+	bst.Insert(93)
+	bst.Insert(120)
+	bst.Insert(110)
+	bst.Insert(130)
 
 	// When a node with the provided value exists
-	n, found := bts.Find(92)
-	expectedN := bts.Root().Left().Right().Left()
+	n, found := bst.Find(92)
+	expectedN := bst.Root().Left().Right().Left()
 	expectedFound := true
 
 	if !reflect.DeepEqual(n, expectedN) {

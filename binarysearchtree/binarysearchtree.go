@@ -1,7 +1,9 @@
 // Package binarysearchtree provides functions to create/work with generic binary search trees.
 package binarysearchtree
 
-import "golang.org/x/exp/constraints"
+import (
+	"golang.org/x/exp/constraints"
+)
 
 // BinarySearchTree is a binary search tree of an ordered type T.
 type BinarySearchTree[T constraints.Ordered] struct {
@@ -15,13 +17,13 @@ func New[T constraints.Ordered]() *BinarySearchTree[T] {
 }
 
 // Insert adds a value to the binary search tree.
-func (bts *BinarySearchTree[T]) Insert(v T) {
-	newRoot, inserted := insertRecursive(nil, bts.root, v)
+func (bst *BinarySearchTree[T]) Insert(v T) {
+	newRoot, inserted := insertRecursive(nil, bst.root, v)
 
-	bts.root = newRoot
+	bst.root = newRoot
 
 	if inserted {
-		bts.size++
+		bst.size++
 	}
 }
 
@@ -43,7 +45,7 @@ func insertRecursive[T constraints.Ordered](previous *Node[T], current *Node[T],
 }
 
 // Remove removes a node from the binary search tree.
-func (bts *BinarySearchTree[T]) Remove(n *Node[T]) {
+func (bst *BinarySearchTree[T]) Remove(n *Node[T]) {
 	if n.Left() == nil && n.Right() == nil {
 		p := n.Parent()
 
@@ -61,7 +63,7 @@ func (bts *BinarySearchTree[T]) Remove(n *Node[T]) {
 
 		n.value = successor.Value()
 
-		bts.Remove(successor)
+		bst.Remove(successor)
 
 		return
 	} else if n.Left() != nil {
@@ -74,7 +76,7 @@ func (bts *BinarySearchTree[T]) Remove(n *Node[T]) {
 }
 
 // NodeHeight returns the number of edges from a node to its deepest descendent (the height of a node).
-func (bts *BinarySearchTree[T]) NodeHeight(n *Node[T]) int {
+func (bst *BinarySearchTree[T]) NodeHeight(n *Node[T]) int {
 	return nodeHeightRecursive(n)
 }
 
@@ -94,7 +96,7 @@ func nodeHeightRecursive[T constraints.Ordered](n *Node[T]) int {
 }
 
 // NodeDepth returns the number of edges from the root of the tree to a node (the depth of a node).
-func (bts *BinarySearchTree[T]) NodeDepth(n *Node[T]) int {
+func (bst *BinarySearchTree[T]) NodeDepth(n *Node[T]) int {
 	return nodeDepthRecursive(n)
 }
 
@@ -107,8 +109,8 @@ func nodeDepthRecursive[T constraints.Ordered](n *Node[T]) int {
 }
 
 // Find returns the node of the binary search value that has a specific value.
-func (bts *BinarySearchTree[T]) Find(v T) (n *Node[T], found bool) {
-	n = bts.Root()
+func (bst *BinarySearchTree[T]) Find(v T) (n *Node[T], found bool) {
+	n = bst.Root()
 
 	for n != nil {
 		nV := n.Value()
@@ -126,16 +128,16 @@ func (bts *BinarySearchTree[T]) Find(v T) (n *Node[T], found bool) {
 }
 
 // Root returns the root of the binary search tree.
-func (bts *BinarySearchTree[T]) Root() *Node[T] {
-	return bts.root
+func (bst *BinarySearchTree[T]) Root() *Node[T] {
+	return bst.root
 }
 
 // Height returns the number of edges between the root of the tree and its deepest descendent, i.e. the height of the root.
-func (bts *BinarySearchTree[T]) Height() int {
-	return bts.NodeHeight(bts.Root())
+func (bst *BinarySearchTree[T]) Height() int {
+	return bst.NodeHeight(bst.Root())
 }
 
 // Size returns the number of nodes in the binary search tree.
-func (bts *BinarySearchTree[T]) Size() int {
-	return bts.size
+func (bst *BinarySearchTree[T]) Size() int {
+	return bst.size
 }
