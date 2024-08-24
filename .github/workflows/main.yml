@@ -13,23 +13,24 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - name: Downnload go@v1.23
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.23
 
-    - name: Downnload go@v1.18
-      uses: actions/setup-go@v1
-      with:
-        go-version: 1.18
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Checkout repo
-      uses: actions/checkout@v1
+      - name: Download deps
+        run: go mod download
 
-    - name: Download deps
-      run: go mod download
+      - name: Test
+        run: go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
 
-    - name: Test
-      run: go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
-
-    - name: Codecov
-      uses: codecov/codecov-action@v2
-      with:
-        files: coverage.txt
-        verbose: true
+      - name: Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: coverage.txt
+          fail_ci_if_error: true
+          verbose: true
+          token: ${{secrets.CODECOV_TOKEN}}
