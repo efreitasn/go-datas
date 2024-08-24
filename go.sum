@@ -1,4 +1,4 @@
-github.com/efreitasn/go-algs v0.0.2 h1:vyvCnWk4bWpso6RhytKJ1/xbYHKyf+oixWjB+uagM5E=
-github.com/efreitasn/go-algs v0.0.2/go.mod h1:jcXRJMUSs76LW5gM7b5pNbbEN4SxOn9zXVIVsEUbJFk=
-golang.org/x/exp v0.0.0-20220613132600-b0d781184e0d h1:vtUKgx8dahOomfFzLREU8nSv25YHnTgLBn4rDnWZdU0=
-golang.org/x/exp v0.0.0-20220613132600-b0d781184e0d/go.mod h1:Kr81I6Kryrl9sr8s2FK3vxD90NdsKWRuOIl2O4CvYbA=
+github.com/efreitasn/go-algs v0.0.3 h1:y16PTFv6Qd3p081yWjIiinafaehURRq/rbWF4fTUi2I=
+github.com/efreitasn/go-algs v0.0.3/go.mod h1:LJqr3S0Y3Q+iVBO9CpelQvseztIMgM4QJatBSCeXzYU=
+golang.org/x/exp v0.0.0-20240823005443-9b4947da3948 h1:kx6Ds3MlpiUHKj7syVnbp57++8WpuKPcR5yjLBjvLEA=
+golang.org/x/exp v0.0.0-20240823005443-9b4947da3948/go.mod h1:akd2r19cwCdwSwWeIdzYQGa/EZZyqcOdwWiwj5L5eKQ=
