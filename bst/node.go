@@ -1,11 +1,14 @@
-package binarysearchtree
+package bst
+
+import "golang.org/x/exp/constraints"
 
 // Node is a node of a binary search tree.
-type Node[T comparable] struct {
-	value  T
-	left   *Node[T]
-	right  *Node[T]
-	parent *Node[T]
+type Node[T constraints.Ordered] struct {
+	value         T
+	left          *Node[T]
+	right         *Node[T]
+	parent        *Node[T]
+	balanceFactor int8
 }
 
 // Value returns the value of the node.
@@ -26,4 +29,9 @@ func (n *Node[T]) Right() *Node[T] {
 // Parent returns the parent of the node.
 func (n *Node[T]) Parent() *Node[T] {
 	return n.parent
+}
+
+// BalanceFactor returns the balance factor of the node.
+func (n *Node[T]) BalanceFactor() int8 {
+	return n.balanceFactor
 }
