@@ -2,6 +2,7 @@ package bst
 
 import (
 	"fmt"
+	"iter"
 
 	"golang.org/x/exp/constraints"
 )
@@ -20,46 +21,49 @@ const (
 	PostOrder = LRN
 )
 
-// TraverseFunc is the function called when traversing a tree.
-type TraverseFunc[T constraints.Ordered] func(n *Node[T]) bool
-
-func traverse[T constraints.Ordered](order TraverseOrder, root *Node[T], fn TraverseFunc[T]) {
-	if root == nil {
-		return
-	}
+func traverse[T constraints.Ordered](order TraverseOrder, root *Node[T]) iter.Seq[*Node[T]] {
+	var recursiveFunc func(*Node[T], func(*Node[T]) bool) bool
 
 	switch order {
 	case NLR:
-		traverseNLRRecursive(root, fn)
+		recursiveFunc = traverseNLRRecursive
 
 	case LNR:
-		traverseLNRRecursive(root, fn)
+		recursiveFunc = traverseLNRRecursive
 
 	case LRN:
-		traverseLRNRecursive(root, fn)
+		recursiveFunc = traverseLRNRecursive
 
 	default:
 		panic(fmt.Sprintf("invalid traverse order: %v", order))
 	}
+
+	return func(yield func(*Node[T]) bool) {
+		if root == nil {
+			return
+		}
+
+		recursiveFunc(root, yield)
+	}
 }
 
-func traverseNLRRecursive[T constraints.Ordered](n *Node[T], fn TraverseFunc[T]) bool {
+func traverseNLRRecursive[T constraints.Ordered](n *Node[T], yield func(*Node[T]) bool) bool {
 	if n == nil {
 		return true
 	}
 
-	if !fn(n) {
+	if !yield(n) {
 		return false
 	}
 
 	if n.left != nil {
-		if !traverseNLRRecursive(n.left, fn) {
+		if !traverseNLRRecursive(n.left, yield) {
 			return false
 		}
 	}
 
 	if n.right != nil {
-		if !traverseNLRRecursive(n.right, fn) {
+		if !traverseNLRRecursive(n.right, yield) {
 			return false
 		}
 	}
@@ -67,23 +71,23 @@ func traverseNLRRecursive[T constraints.Ordered](n *Node[T], fn TraverseFunc[T])
 	return true
 }
 
-func traverseLNRRecursive[T constraints.Ordered](n *Node[T], fn TraverseFunc[T]) bool {
+func traverseLNRRecursive[T constraints.Ordered](n *Node[T], yield func(*Node[T]) bool) bool {
 	if n == nil {
 		return true
 	}
 
 	if n.left != nil {
-		if !traverseLNRRecursive(n.left, fn) {
+		if !traverseLNRRecursive(n.left, yield) {
 			return false
 		}
 	}
 
-	if !fn(n) {
+	if !yield(n) {
 		return false
 	}
 
 	if n.right != nil {
-		if !traverseLNRRecursive(n.right, fn) {
+		if !traverseLNRRecursive(n.right, yield) {
 			return false
 		}
 	}
@@ -91,22 +95,22 @@ func traverseLNRRecursive[T constraints.Ordered](n *Node[T], fn TraverseFunc[T])
 	return true
 }
 
-func traverseLRNRecursive[T constraints.Ordered](n *Node[T], fn TraverseFunc[T]) bool {
+func traverseLRNRecursive[T constraints.Ordered](n *Node[T], yield func(*Node[T]) bool) bool {
 	if n == nil {
 		return true
 	}
 
 	if n.left != nil {
-		if !traverseLRNRecursive(n.left, fn) {
+		if !traverseLRNRecursive(n.left, yield) {
 			return false
 		}
 	}
 
 	if n.right != nil {
-		if !traverseLRNRecursive(n.right, fn) {
+		if !traverseLRNRecursive(n.right, yield) {
 			return false
 		}
 	}
 
-	return fn(n)
+	return yield(n)
 }

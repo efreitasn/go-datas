@@ -1,6 +1,7 @@
 package bst
 
 import (
+	"slices"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -15,6 +16,12 @@ func TestTraverse(t *testing.T) {
 	}
 
 	testCases := []testCase{
+		{
+			name:           "empty",
+			order:          PreOrder,
+			values:         nil,
+			expectedValues: nil,
+		},
 		{
 			name:   "pre_order",
 			order:  PreOrder,
@@ -127,13 +134,7 @@ func TestTraverse(t *testing.T) {
 				bst.Insert(v)
 			}
 
-			vals := make([]*Node[int], 0, bst.Size())
-
-			traverse(tc.order, bst.root, func(n *Node[int]) bool {
-				vals = append(vals, n)
-
-				return true
-			})
+			vals := slices.Collect(traverse(tc.order, bst.root))
 
 			if diff := cmp.Diff(tc.expectedValues, vals, nodeComparer); diff != "" {
 				t.Errorf("invalid values:\n%v", diff)

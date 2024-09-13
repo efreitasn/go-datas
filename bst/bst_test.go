@@ -1,6 +1,7 @@
 package bst
 
 import (
+	"slices"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -72,12 +73,7 @@ func TestBST_int_Insert(t *testing.T) {
 				bst.Insert(v)
 			}
 
-			vals := make([]*Node[int], 0, bst.Size())
-			bst.Traverse(NLR, func(n *Node[int]) bool {
-				vals = append(vals, n)
-
-				return true
-			})
+			vals := slices.Collect(bst.Traverse(NLR))
 
 			if diff := cmp.Diff(len(tc.values), bst.Size()); diff != "" {
 				t.Errorf("invalid size:\n%v", diff)
@@ -487,7 +483,7 @@ func TestBST_int_Remove(t *testing.T) {
 			name:              "root_only_node",
 			valueToRemove:     400,
 			valuesToInsert:    []int{400},
-			expectedNLRValues: []*Node[int]{},
+			expectedNLRValues: nil,
 		},
 		{
 			name:           "root_many_nodes",
@@ -533,12 +529,7 @@ func TestBST_int_Remove(t *testing.T) {
 			oldSize := bst.Size()
 			bst.Remove(n)
 
-			vals := make([]*Node[int], 0, bst.Size())
-			bst.Traverse(NLR, func(n *Node[int]) bool {
-				vals = append(vals, n)
-
-				return true
-			})
+			vals := slices.Collect(bst.Traverse(NLR))
 
 			if diff := cmp.Diff(oldSize-1, bst.Size()); diff != "" {
 				t.Errorf("invalid size:\n%v", diff)

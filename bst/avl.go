@@ -1,6 +1,8 @@
 package bst
 
 import (
+	"iter"
+
 	"golang.org/x/exp/constraints"
 )
 
@@ -55,9 +57,9 @@ func (avl *AVL[T]) Find(v T) (n *Node[T], found bool) {
 	return n, false
 }
 
-// Traverse traverses the AVL tree in the given order.
-func (avl *AVL[T]) Traverse(order TraverseOrder, fn TraverseFunc[T]) {
-	traverse(order, avl.root, fn)
+// Traverse returns an iterator over all nodes in the AVL tree in the given order.
+func (avl *AVL[T]) Traverse(order TraverseOrder) iter.Seq[*Node[T]] {
+	return traverse(order, avl.root)
 }
 
 // Remove removes a node from the AVL tree.

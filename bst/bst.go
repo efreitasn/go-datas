@@ -1,6 +1,8 @@
 package bst
 
 import (
+	"iter"
+
 	"golang.org/x/exp/constraints"
 )
 
@@ -56,9 +58,9 @@ func (bst *BST[T]) Find(v T) (n *Node[T], found bool) {
 	return n, false
 }
 
-// Traverse traverses the BST in the given order.
-func (bst *BST[T]) Traverse(order TraverseOrder, fn TraverseFunc[T]) {
-	traverse(order, bst.root, fn)
+// Traverse returns an iterator over all nodes in the BST in the given order.
+func (bst *BST[T]) Traverse(order TraverseOrder) iter.Seq[*Node[T]] {
+	return traverse(order, bst.root)
 }
 
 // Remove removes a node from the BST.
